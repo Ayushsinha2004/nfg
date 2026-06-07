@@ -39,12 +39,12 @@ const cors = {
 }
 
 // Everything after the function-name segment is the PostgREST path + query.
+// Raw substring (not split/join) so any trailing slash is preserved.
 function restPath(reqUrl: string): string {
   const u = new URL(reqUrl)
-  const segs = u.pathname.split('/').filter(Boolean) // e.g. ["functions","v1","nfg-feed","inbox_messages"]
-  const idx = segs.indexOf('nfg-feed')
-  const rest = idx >= 0 ? segs.slice(idx + 1) : segs
-  return rest.join('/') + u.search
+  const marker = '/nfg-feed/'
+  const i = u.pathname.indexOf(marker)
+  return (i >= 0 ? u.pathname.slice(i + marker.length) : u.pathname.replace(/^\/+/, '')) + u.search
 }
 
 Deno.serve(async (req) => {
