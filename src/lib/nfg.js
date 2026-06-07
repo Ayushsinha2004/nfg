@@ -1,6 +1,11 @@
-// All NFG Supabase requests go through the Vite proxy at /nfg/* — the proxy
-// injects the service key server-side, so no key is present in the browser.
-const BASE = '/nfg/rest/v1'
+// NFG Supabase requests are proxied so the service key never reaches the browser.
+//   • dev  — the Vite server proxy at /nfg/* (vite.config.js) injects the key.
+//   • prod — set VITE_NFG_FEED_URL to the deployed `nfg-feed` edge function
+//            (e.g. https://<ref>.functions.supabase.co/nfg-feed). It appends the
+//            /rest/v1 segment itself, so point the var at the function root.
+// Default keeps the dev proxy path so `vite dev` works with no extra config.
+const FEED = import.meta.env.VITE_NFG_FEED_URL
+const BASE = FEED ? FEED.replace(/\/$/, '') : '/nfg/rest/v1'
 
 // Fetch rows for a PostgREST path (e.g. "inbox_messages?select=created_at&limit=100").
 export async function rows(path) {
@@ -19,7 +24,7 @@ export async function rowsAll(table, query) {
   const out = []
   let from = 0
   for (;;) {
-    const res = await fetch(`/nfg/rest/v1/${table}?${query}`, {
+    const res = await fetch(`${BASE}/${table}?${query}`, {
       headers: {
         Accept: 'application/json',
         'Range-Unit': 'items',
