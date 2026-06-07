@@ -1,0 +1,131 @@
+/* NFG.AI — Performance Dashboard theme (from the product UI: near-black + vivid green) */
+:root {
+  --bg:           #0d0f13;
+  --panel:        #14171d;
+  --panel-2:      #181c23;
+  --border:       #242932;
+  --text:         #f3f5f7;
+  --text-dim:     #8a929e;
+  --text-faint:   #5f6773;
+  --accent:       #22c55e;
+  --accent-soft:  rgba(34, 197, 94, 0.14);
+  --green:        #22c55e;
+  --yellow:       #eab308;
+  --red:          #ef4444;
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+}
+
+.loading-screen {
+  height: 100vh; display: flex; flex-direction: column; gap: 14px;
+  align-items: center; justify-content: center; color: var(--text-dim);
+}
+.spinner {
+  width: 30px; height: 30px; border-radius: 50%;
+  border: 3px solid var(--border); border-top-color: var(--accent);
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.dashboard { max-width: 1180px; margin: 0 auto; padding: 0 24px 56px; }
+
+/* ── Header ───────────────────────────────────────────── */
+.hdr {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 22px 0 20px; margin-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.hdr-brand { display: flex; align-items: center; gap: 13px; }
+.hdr-logo {
+  width: 40px; height: 40px; border-radius: 10px;
+  background: var(--accent); color: #06210f;
+  display: grid; place-items: center; font-weight: 800; font-size: 20px;
+}
+.hdr-title { font-size: 19px; font-weight: 700; letter-spacing: -0.2px; }
+.hdr-title .beta {
+  font-size: 10px; font-weight: 700; color: var(--accent);
+  background: var(--accent-soft); padding: 2px 6px; border-radius: 5px;
+  margin-left: 8px; vertical-align: middle;
+}
+.hdr-sub { font-size: 12.5px; color: var(--text-dim); margin-top: 3px; }
+.hdr-right { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+.filter { display: inline-flex; background: var(--panel); border: 1px solid var(--border); border-radius: 9px; padding: 3px; gap: 2px; }
+.filter-btn {
+  appearance: none; border: 0; background: transparent; cursor: pointer;
+  color: var(--text-dim); font: 600 12.5px var(--font);
+  padding: 6px 12px; border-radius: 6px; transition: all .12s ease;
+}
+.filter-btn:hover { color: var(--text); }
+.filter-btn.active { background: var(--accent); color: #06210f; }
+.hdr-meta { text-align: right; font-size: 12px; color: var(--text-dim); }
+.hdr-meta .live { color: var(--accent); font-weight: 600; }
+.hdr-meta .thru { color: var(--text-dim); }
+.hdr-meta .dot {
+  display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--accent); margin-right: 6px; vertical-align: middle;
+  box-shadow: 0 0 0 0 rgba(34,197,94,0.6); animation: pulse 2s infinite;
+}
+@keyframes pulse { 70% { box-shadow: 0 0 0 6px rgba(34,197,94,0); } }
+
+.section-label {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.8px;
+  text-transform: uppercase; color: var(--text-faint);
+  margin: 26px 0 12px;
+}
+
+/* ── Cards ────────────────────────────────────────────── */
+.card {
+  background: var(--panel); border: 1px solid var(--border);
+  border-radius: 14px;
+}
+.kpi-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+}
+.kpi {
+  background: var(--panel); border: 1px solid var(--border);
+  border-radius: 14px; padding: 18px 18px 16px;
+}
+.kpi-label {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.6px;
+  text-transform: uppercase; color: var(--text-dim);
+}
+.kpi-value { font-size: 32px; font-weight: 800; letter-spacing: -1px; margin-top: 10px; }
+.kpi-value .unit { font-size: 15px; font-weight: 600; color: var(--text-dim); margin-left: 5px; }
+.kpi-foot { font-size: 12px; color: var(--text-faint); margin-top: 8px; }
+.kpi-foot b { color: var(--accent); font-weight: 600; }
+
+.grid-2 { display: grid; grid-template-columns: 1.6fr 1fr; gap: 16px; }
+
+.panel { padding: 18px 20px 8px; }
+.panel-title { font-size: 14.5px; font-weight: 700; }
+.panel-head { display: flex; align-items: baseline; justify-content: space-between; padding: 18px 20px 0; }
+.panel-head .hint { font-size: 12px; color: var(--text-dim); }
+
+/* risk donut legend */
+.legend { padding: 4px 20px 18px; }
+.legend-row { display: flex; align-items: center; justify-content: space-between; padding: 7px 0; font-size: 13px; }
+.legend-left { display: flex; align-items: center; gap: 9px; color: var(--text); }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+.legend-val { font-weight: 700; }
+.legend-pct { color: var(--text-dim); width: 42px; text-align: right; margin-left: 10px; }
+
+.banner-err {
+  background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.4);
+  color: #fca5a5; padding: 12px 16px; border-radius: 10px; font-size: 13px; margin: 16px 0;
+}
+.note {
+  font-size: 12px; color: var(--text-faint); margin-top: 14px; line-height: 1.5;
+}
+@media (max-width: 880px) {
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .grid-2 { grid-template-columns: 1fr; }
+}
